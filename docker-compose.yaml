@@ -1,0 +1,19 @@
+version: "3.4"
+
+services:
+  db:
+    image: postgres:14.1-alpine3.15
+    container_name: testdb
+    hostname: db
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - ./dbschema:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+
+volumes:
+  dbdata:
